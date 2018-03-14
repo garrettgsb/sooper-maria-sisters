@@ -40,7 +40,6 @@ class Player {
 
   processCollisions(collisionRecord) {
     Object.values(this.collisionRecord).forEach(point => {
-      console.log(point);
       point.forEach(collision => {
         if (collision.callback) {
           collision.callback(this);

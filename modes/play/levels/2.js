@@ -1,10 +1,10 @@
-level1config = {
+level2config = {
   ground: (() => {
     const arr = [];
     var alignments = [
-      [25, GroundTile, 300, true],
-      [14, Trampoline, 240],
-      [8, GroundTile, 140],
+      [26, GroundTile, 300, true],
+      [6, Trampoline, 240],
+      [15, GroundTile, 140],
     ]
     for (var i = 2; i < 300; i++) {
       for (var [modulus, ObjectClass, height, invert] of alignments) {
@@ -14,5 +14,10 @@ level1config = {
       }
     }
     return arr;
-  })()
+  })(),
+
+  coins: [],
+
+
+  mobs: [],
 };

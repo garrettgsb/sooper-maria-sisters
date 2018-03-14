@@ -13,7 +13,8 @@ class PlayMode {
     const state = {
       player: new Player(this.game, this, 20, 250),
       levels: {
-        1: new Level1(this.game, this)
+        1: new Level(this.game, this, level1config),
+        2: new Level(this.game, this, level2config),
       }
     };
     state.mobs = [ state.player, ...state.levels[this.currentLevel].mobs ];
