@@ -1,2 +1,4 @@
 # sooper-maria-sisters
-They can do it if they try~
+
+Bounding, bouncing, jumping high!
+They can do it if they try!
