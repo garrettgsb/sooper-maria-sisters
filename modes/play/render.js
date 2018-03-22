@@ -56,7 +56,11 @@ class PlayModeRender {
   drawGround() {
     const currentLevel = this.mode.state.levels[this.mode.currentLevel];
     currentLevel.ground.forEach(tile => {
-      this.drawRect(tile.x, tile.y, tile.color, tile.size.x, tile.size.y);
+      if (tile.sprite) {
+        this.drawImage(tile.sprite, tile.x, tile.y, tile.size.x, tile.size.y);
+      } else {
+        this.drawRect(tile.x, tile.y, tile.color, tile.size.x, tile.size.y);
+      }
     });
   }
 
@@ -78,6 +82,11 @@ class PlayModeRender {
     const ctx = this.game.ctx;
     ctx.fillStyle = color;
     ctx.fillRect(screenX, screenY, width, height);
+  }
+
+  drawImage(image, x, y, width, height) {
+    const ctx = this.game.ctx;
+    ctx.drawImage(image, x, y, width, height);
   }
 
   screenCoords(worldCoords) {
