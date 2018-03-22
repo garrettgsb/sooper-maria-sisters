@@ -3,6 +3,7 @@ class Level {
     this.game = game;
     this.mode = mode;
     this.ground = config.ground;      // TODO: maybe later this will need a deep copy?
+    this.deathAltitude = config.deathAltitude || this.size.y * 2.0;
   }
 
   get mobs() {

@@ -125,6 +125,9 @@ class Player {
     // console.log(this.x, this.y);
     this.x += Math.floor(this.velocity.x);
     this.y += Math.floor(this.velocity.y);
+    if (this.y > this.mode.level.deathAltitude) {
+      this.die();
+    }
   }
 
   gravity() {
@@ -195,5 +198,10 @@ class Player {
   run() {
     //TODO
     return true;
+  }
+
+  die() {
+    // TODO: maybe there should be some animation here, hey?
+    this.mode.playerNewLife();
   }
 }

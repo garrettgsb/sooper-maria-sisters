@@ -12,10 +12,10 @@ class PlayMode {
   get initialState() {
     const state = {
       player: new Player(this.game, this, 20, 250),
-      levels: {
-        1: new Level(this.game, this, level1config),
-        2: new Level(this.game, this, level2config),
-      }
+      levels: [
+        new Level(this.game, this, level1config),
+        new Level(this.game, this, level2config),
+      ]
     };
     state.mobs = [ state.player, ...state.levels[this.currentLevel].mobs ];
     return state
@@ -45,5 +45,12 @@ class PlayMode {
     this.physics.do();
     this.render.do();
     this.input.clear();
+  }
+
+  playerNewLife() {
+    const oldLevel = this.currentLevel;
+    this.state = this.initialState;
+    this.exit('start');
+    this.currentLevel = (oldLevel + 1) % this.state.levels.length;
   }
 }
