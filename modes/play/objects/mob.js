@@ -199,12 +199,11 @@ class Mob {
 
   jump() {
     const canJump = (!!this.collisionRecord['bL'] || !!this.collisionRecord['bR']);
-    if (this.jumpTimer) {
+    if (this.cooldowns['jump']) {
       this.moveUp(this.jumpAccel);
       this.jumpAccel = decelTo(this.jumpAccel, 0, 1)
-      this.jumpTimer -= 1;
     } else if (canJump) {
-      this.jumpTimer = this.jumpLength
+      this.setCooldown('jump', this.jumpLength);
       this.jumpAccel = this.jumpSpeed;
       this.jump();
     }
