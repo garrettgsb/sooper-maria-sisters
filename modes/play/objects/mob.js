@@ -30,6 +30,7 @@ class Mob {
     this.collisionRecord = {};
     let x, y;
     collection.forEach(obj => {
+      if (obj === this) { return }
       [x, y] = this.collision(obj);
       this.velocity.x = x;
       this.velocity.y = y;
@@ -122,9 +123,9 @@ class Mob {
     this.friction();
     this.gravity();
     this.processActions();
-    this.collisions(this.mode.level.ground);
-    this.x = this.velocity.x < 0 ? this.x + Math.floor(this.velocity.x) : this.x + Math.ceil(this.velocity.x);
-    this.y += Math.floor(this.velocity.y);
+    this.collisions([...this.mode.level.ground, ...this.mode.state.mobs]);
+    this.x += this.velocity.x
+    this.y += this.velocity.y;
   }
 
   gravity() {
