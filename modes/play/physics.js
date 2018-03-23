@@ -10,7 +10,7 @@ class PlayModePhysics {
   do() {
     this.processInput();
     this.collisions();
-    this.mode.state.player.physics();
+    this.mode.state.mobs.forEach(mob => mob.physics());
   }
 
   processInput() {

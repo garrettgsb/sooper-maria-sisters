@@ -18,6 +18,10 @@ level2config = {
 
   coins: [],
 
-
-  mobs: [],
+  mobs: [
+    {
+      type: BadGuy,
+      coords: [80, 250]
+    }
+  ],
 };
