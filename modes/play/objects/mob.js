@@ -1,5 +1,6 @@
 class Mob {
   constructor(game, mode, x, y) {
+    this.name = "Undifferentiated Mob";
     this.x = x;
     this.y = y;
     this.size = { x: 18, y: 18 };
@@ -15,6 +16,7 @@ class Mob {
     this.velocity = { x: 0, y: 0 };
     this.jumpLength = 1;
     this.collisionRecord = {};
+    this.cooldowns = {};
   }
 
   get hitBox() {
@@ -42,9 +44,9 @@ class Mob {
 
   processCollisions(collisionRecord) {
     Object.values(this.collisionRecord).forEach(point => {
-      point.forEach(collision => {
-        if (collision.callback) {
-          collision.callback(this);
+      point.forEach(obj => {
+        if (obj.collisionCallback) {
+          obj.collisionCallback(this);
         }
       })
     })
@@ -120,6 +122,7 @@ class Mob {
 
   physics() {
     this.brain.think();
+    this.processCooldowns();
     this.friction();
     this.gravity();
     this.processActions();
@@ -158,6 +161,20 @@ class Mob {
     } else if (action === 'run') {
       this.run();
     }
+  }
+
+  processCooldowns() {
+    if (Object.entries(this.cooldowns).length > 0) {
+      Object.entries(this.cooldowns).forEach(entry => {
+        const [name, time] = entry
+        this.cooldowns[name] -= 1
+        if (this.cooldowns[name] < 0) { this.cooldowns[name] = null }
+      });
+    }
+  }
+
+  setCooldown(name, time) {
+    this.cooldowns[name] = time;
   }
 
 // Movement methods

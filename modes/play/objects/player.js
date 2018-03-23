@@ -1,6 +1,7 @@
 class Player extends Mob {
   constructor(game, mode, x, y) {
     super(game, mode, x, y)
+    this.name = "Player";
     this.brain = new PlayerBrain(this);
     this.color = "#e55";
     this.moveSpeed = 12;

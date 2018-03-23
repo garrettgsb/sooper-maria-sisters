@@ -1,8 +1,36 @@
 class BadGuy extends Mob {
   constructor(game, mode, x, y) {
     super(game, mode, x, y);
+    this.name = "BadGuy";
     this.color = "#ee5";
     this.brain = new BadGuyBrain(this);
+  }
+
+  collisionCallback(obj) {
+    if (obj.name !== 'Player' || this.cooldowns['playerCollision']) { return };
+    this.setCooldown('playerCollision', 100);
+    const colors = [
+      '#ee5',
+      '#bb2',
+      '#ffa',
+      '#33f',
+      '#aaf',
+      '#ccf',
+    ]
+    const phrases = [
+      'ow',
+      'ouch',
+      'hey',
+      'heck',
+      'rude',
+      'stop it',
+      "don't",
+      'where did you learn to drive?',
+    ]
+    this.color = colors[Math.floor(Math.random() * colors.length)]
+    !window.speechSynthesis.speaking && window.speechSynthesis.speak(
+      new SpeechSynthesisUtterance(phrases[Math.floor(Math.random() * phrases.length)])
+    );
   }
 }
 

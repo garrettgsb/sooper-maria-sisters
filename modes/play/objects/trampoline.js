@@ -19,7 +19,7 @@ class Trampoline {
     }
   }
 
-  callback(obj) {
+  collisionCallback(obj) {
     obj.velocity.y -= 16;
   }
 

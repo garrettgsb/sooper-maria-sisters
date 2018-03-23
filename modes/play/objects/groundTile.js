@@ -1,5 +1,6 @@
 class GroundTile {
   constructor(x, y) {
+    this.name = "GroundTile";
     this.x = x;
     this.y = y;
     this.size = { x: 20, y: 20 };
