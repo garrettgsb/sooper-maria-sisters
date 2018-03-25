@@ -49,7 +49,11 @@ class PlayModeRender {
 
   drawMobs() {
     this.mode.state.mobs.forEach(mob => {
-      this.drawRect(mob.x, mob.y, mob.color, mob.size.x, mob.size.y);
+      if (mob.sprite) {
+        this.drawImage(mob.sprite, mob.x, mob.y, mob.size.x, mob.size.y);
+      } else {
+        this.drawRect(mob.x, mob.y, mob.color, mob.size.x, mob.size.y);
+      }
     });
   }
 
@@ -85,8 +89,9 @@ class PlayModeRender {
   }
 
   drawImage(image, x, y, width, height) {
+    const {x: screenX, y: screenY} = this.screenCoords({ x, y });
     const ctx = this.game.ctx;
-    ctx.drawImage(image, x, y, width, height);
+    ctx.drawImage(image, screenX, screenY, width, height);
   }
 
   screenCoords(worldCoords) {
