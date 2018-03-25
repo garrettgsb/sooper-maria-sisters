@@ -9,6 +9,7 @@ class Player extends Mob {
     this.fallSpeed = 4;
     this.accel = 1.5;
     this.frictionCoeff = 0.6;
+    this.spritePath = './assets/sprites/player/moira/bunny2_walk1.png';
   }
 }
 

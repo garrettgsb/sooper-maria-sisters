@@ -4,6 +4,7 @@ class BadGuy extends Mob {
     this.name = "BadGuy";
     this.color = "#ee5";
     this.brain = new BadGuyBrain(this);
+    this.spritePath = 'assets/sprites/enemies/slimeBlock/slimeBlock.png';
   }
 
   collisionCallback(obj) {

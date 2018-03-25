@@ -1,16 +1,22 @@
-class Mob extends Obj {
+class Obj {
   constructor(game, mode, x, y) {
-    super(game, mode, x, y)
-    this.name = "Undifferentiated Mob";
+    this.name = "Undifferentiated Obj";
+    this.x = x;
+    this.y = y;
+    this.size = { x: 18, y: 18 };
     this.color = "#eee";
-    this.brain = new Brain(this);
-    this.moveSpeed = 2;
-    this.jumpSpeed = 24;
-    this.fallSpeed = 4;
-    this.accel = 0.5;
-    this.frictionCoeff = 0.6;
-    this.velocity = { x: 0, y: 0 };
-    this.jumpLength = 1;
+    this.game = game;
+    this.mode = mode;
+    this.collisionRecord = {};
+    this.cooldowns = {};
+  }
+
+  get sprite() {
+    if (!this.spritePath) { return null }
+    if (this.image) { return this.image }
+    this.image = new Image()
+    this.image.src = this.spritePath;
+    return this.image;
   }
 
   get hitBox() {
@@ -206,20 +212,5 @@ class Mob extends Obj {
   run() {
     //TODO
     return true;
-  }
-}
-
-
-class Brain {
-  constructor(meat) {
-    this.meat = meat;
-  }
-
-  get actions() {
-    return ['jump'];
-  }
-
-  think() {
-    const whatToDoAllTheTime = 'jump';
   }
 }
