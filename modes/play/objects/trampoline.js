@@ -4,6 +4,11 @@ class Trampoline {
     this.y = y;
     this.size = { x: 20, y: 20 };
     this.color = '#94c';
+    this.sprite = (function () {
+      const image = new Image()
+      image.src = './assets/sprites/tiles/spring/spring.png';
+      return image;
+    })();
   }
 
   get isGround() {
