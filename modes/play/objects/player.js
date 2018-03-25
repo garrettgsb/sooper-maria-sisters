@@ -14,6 +14,11 @@ class Player {
     this.velocity = { x: 0, y: 0 };
     this.jumpLength = 1;
     this.collisionRecord = {};
+    this.sprite = (function () {
+      const image = new Image()
+      image.src = './assets/sprites/player/moira/bunny2_walk1.png';
+      return image;
+    })();
   }
 
   get hitBox() {
