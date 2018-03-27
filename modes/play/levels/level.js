@@ -3,10 +3,7 @@ class Level {
     this.game = game;
     this.mode = mode;
     this.ground = config.ground;      // TODO: maybe later this will need a deep copy?
-  }
-
-  get mobs() {
-    return [];
+    this.mobs = this.generateMobs(config) || [];
   }
 
   get size() {
@@ -21,5 +18,9 @@ class Level {
       : nextTile;
     }).y;
     return { x, y };
+  }
+
+  generateMobs(config) {
+    return config.mobs && config.mobs.map(mob => new mob.type(this.game, this.mode, ...mob.coords))
   }
 }

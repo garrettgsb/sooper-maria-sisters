@@ -14,5 +14,20 @@ level1config = {
       }
     }
     return arr;
-  })()
+  })(),
+
+  mobs: [
+    {
+      type: BadGuy,
+      coords: [240, 250]
+    },
+    {
+      type: BadGuy,
+      coords: [540, 250]
+    },
+    {
+      type: BadGuy,
+      coords: [840, 250]
+    },
+  ]
 };
