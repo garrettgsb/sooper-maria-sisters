@@ -49,14 +49,22 @@ class PlayModeRender {
 
   drawMobs() {
     this.mode.state.mobs.forEach(mob => {
-      this.drawRect(mob.x, mob.y, mob.color, mob.size.x, mob.size.y);
+      if (mob.sprite) {
+        this.drawImage(mob.sprite, mob.x, mob.y, mob.size.x, mob.size.y);
+      } else {
+        this.drawRect(mob.x, mob.y, mob.color, mob.size.x, mob.size.y);
+      }
     });
   }
 
   drawGround() {
     const currentLevel = this.mode.state.levels[this.mode.currentLevel];
     currentLevel.ground.forEach(tile => {
-      this.drawRect(tile.x, tile.y, tile.color, tile.size.x, tile.size.y);
+      if (tile.sprite) {
+        this.drawImage(tile.sprite, tile.x, tile.y, tile.size.x, tile.size.y);
+      } else {
+        this.drawRect(tile.x, tile.y, tile.color, tile.size.x, tile.size.y);
+      }
     });
   }
 
@@ -78,6 +86,12 @@ class PlayModeRender {
     const ctx = this.game.ctx;
     ctx.fillStyle = color;
     ctx.fillRect(screenX, screenY, width, height);
+  }
+
+  drawImage(image, x, y, width, height) {
+    const {x: screenX, y: screenY} = this.screenCoords({ x, y });
+    const ctx = this.game.ctx;
+    ctx.drawImage(image, screenX, screenY, width, height);
   }
 
   screenCoords(worldCoords) {
