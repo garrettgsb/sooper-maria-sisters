@@ -17,4 +17,9 @@ class PlayerBrain extends Brain {
   get actions() {
     return this.meat.mode.input.actions
   }
+
+  die() {
+    // TODO: maybe there should be some animation here, hey?
+    this.mode.playerNewLife();
+  }
 }
