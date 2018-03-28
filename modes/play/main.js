@@ -47,10 +47,14 @@ class PlayMode {
     this.input.clear();
   }
 
-  playerNewLife() {
+  cycleLevel() {
     const oldLevel = this.currentLevel;
     this.state = this.initialState;
     this.exit('start');
     this.currentLevel = (oldLevel + 1) % this.state.levels.length;
+  }
+
+  playerNewLife() {
+    this.cycleLevel();
   }
 }
