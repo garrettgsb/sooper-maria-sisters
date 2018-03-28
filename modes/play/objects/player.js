@@ -11,15 +11,15 @@ class Player extends Mob {
     this.frictionCoeff = 0.6;
     this.spritePath = './assets/sprites/player/moira/bunny2_walk1.png';
   }
+
+  die() {
+    // TODO: maybe there should be some animation here, hey?
+    this.mode.playerNewLife();
+  }
 }
 
 class PlayerBrain extends Brain {
   get actions() {
     return this.meat.mode.input.actions
-  }
-
-  die() {
-    // TODO: maybe there should be some animation here, hey?
-    this.mode.playerNewLife();
   }
 }
