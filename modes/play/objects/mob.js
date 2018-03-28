@@ -123,6 +123,9 @@ class Mob extends Obj {
     this.collisions([...this.mode.level.ground, ...this.mode.state.mobs]);
     this.x += this.velocity.x
     this.y += this.velocity.y;
+    if (this.y > this.mode.level.deathAltitude) {
+      this.die();
+    }
   }
 
   gravity() {
@@ -206,6 +209,10 @@ class Mob extends Obj {
   run() {
     //TODO
     return true;
+  }
+
+  die() {
+    // TODO: non-player mobs are currently immortal
   }
 }
 
