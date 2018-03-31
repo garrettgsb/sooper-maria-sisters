@@ -1,12 +1,13 @@
 class GroundTile extends Obj {
-  constructor(x, y) {
+  constructor(x, y, config) {
+    config = config || {};
     super(x, y);
     this.name = "GroundTile";
     this.x = x;
     this.y = y;
     this.size = { x: 20, y: 20 };
-    this.color = '#49c';
-    this.spritePath = './assets/sprites/tiles/grass/grassMid.png';
+    this.color = config.color || '#49c';
+    this.spritePath = config.spritePath || './assets/sprites/tiles/grass/grassMid.png';
   }
 
   get isGround() {

@@ -5,18 +5,19 @@ class PlayMode {
     this.input = new PlayModeInput(game, this);
     this.physics = new PlayModePhysics(game, this);
     this.render = new PlayModeRender(game, this);
-    this.currentLevel = 1;
+    this.currentLevel = 0;
     this.state = this.initialState;
   }
 
   get initialState() {
     const state = {
-      player: new Player(this.game, this, 20, 250),
       levels: [
         new Level(this.game, this, level1config),
-        new Level(this.game, this, level2config),
+        //new Level(this.game, this, level2config),
+        new Level(this.game, this, level3config),
       ]
     };
+    state.player = new Player(this.game, this, ...(state.levels[this.currentLevel].playerSpawn || [50, 50]));
     state.mobs = [ state.player, ...state.levels[this.currentLevel].mobs ];
     return state
   }
