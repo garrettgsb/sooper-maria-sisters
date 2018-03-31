@@ -20,7 +20,7 @@ class Mob extends Obj {
     this.gravity();
     this.processActions();
     this.collisions([...this.mode.level.ground, ...this.mode.state.mobs]);
-    this.x += this.velocity.x
+    this.x += this.velocity.x;
     this.y += this.velocity.y;
     if (this.y > this.mode.level.deathAltitude) {
       this.die();
