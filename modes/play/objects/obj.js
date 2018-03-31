@@ -123,26 +123,10 @@ class Obj {
   physics() {
     this.brain.think();
     this.processCooldowns();
-    this.friction();
-    this.gravity();
     this.processActions();
     this.collisions([...this.mode.level.ground, ...this.mode.state.mobs]);
     this.x += this.velocity.x
     this.y += this.velocity.y;
-  }
-
-  gravity() {
-    if (this.velocity.y < this.fallSpeed) {
-      this.velocity.y = accelTo(this.velocity.y, this.fallSpeed, 2);
-    };
-  }
-
-  friction() {
-    if (this.velocity.x > -1 && this.velocity.x < 1) {
-      this.velocity.x = 0;
-    } else {
-      this.velocity.x *= this.frictionCoeff;
-    }
   }
 
   processActions() {
@@ -152,15 +136,8 @@ class Obj {
   }
 
   processAction(action) {
-    if (action === 'left') {
-      return this.moveLeft();
-    } else if (action === 'right') {
-      return this.moveRight();
-    } else if (action === 'jump') {
-      this.jump();
-    } else if (action === 'run') {
-      this.run();
-    }
+    // No default actions for objs
+    return null;
   }
 
   processCooldowns() {
@@ -175,42 +152,5 @@ class Obj {
 
   setCooldown(name, time) {
     this.cooldowns[name] = time;
-  }
-
-// Movement methods
-  moveLeft() {
-      this.velocity.x = accelTo(Math.abs(this.velocity.x), this.moveSpeed, this.accel) * -1;
-  }
-
-  moveRight() {
-    // TODO: Make sure you can move
-    this.velocity.x = accelTo(this.velocity.x, this.moveSpeed, this.accel);
-  }
-
-  moveUp(amount=this.moveSpeed) {
-      this.velocity.y -= amount;
-  }
-
-  moveDown(amount=this.fallSpeed) {
-    if (this.velocity.y < this.moveSpeed) {
-      this.velocity.y += this.accel;
-    };
-  }
-
-  jump() {
-    const canJump = (!!this.collisionRecord['bL'] || !!this.collisionRecord['bR']);
-    if (this.cooldowns['jump']) {
-      this.moveUp(this.jumpAccel);
-      this.jumpAccel = decelTo(this.jumpAccel, 0, 1)
-    } else if (canJump) {
-      this.setCooldown('jump', this.jumpLength);
-      this.jumpAccel = this.jumpSpeed;
-      this.jump();
-    }
-  }
-
-  run() {
-    //TODO
-    return true;
   }
 }
