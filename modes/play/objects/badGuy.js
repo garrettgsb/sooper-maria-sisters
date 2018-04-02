@@ -4,7 +4,11 @@ class BadGuy extends Mob {
     this.name = "BadGuy";
     this.color = "#ee5";
     this.brain = new BadGuyBrain(this);
-    this.spritePath = 'assets/sprites/enemies/slimeBlock/slimeBlock.png';
+    this.spriteBank = {
+      standing: ['assets/sprites/enemies/slimeBlock/slimeBlock.png'],
+      running: ['assets/sprites/enemies/slimeBlock/slimeBlock_move.png'],
+      jumping: ['assets/sprites/enemies/slimeBlock/slimeBlock.png'],
+    }
   }
 
   collisionCallback(obj) {
@@ -34,7 +38,6 @@ class BadGuy extends Mob {
     );
   }
 }
-
 
 class BadGuyBrain {
   constructor(meat) {

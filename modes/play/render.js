@@ -94,6 +94,14 @@ class PlayModeRender {
     ctx.drawImage(image, screenX, screenY, width, height);
   }
 
+  // drawReverseImage(image, x, y, width, height) {
+  //   const {x: screenX, y: screenY} = this.screenCoords({ x, y });
+  //   const ctx = this.game.ctx;
+  //   ctx.scale(-1, 1);
+  //   ctx.drawImage(image, -screenX, screenY, -width, height);
+  //   ctx.setTransform(1, 0, 0, 1, 0, 0);
+  // }
+
   screenCoords(worldCoords) {
     // worldCoords -> { x, y }
     return {

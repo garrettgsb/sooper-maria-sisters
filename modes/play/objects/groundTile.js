@@ -7,7 +7,9 @@ class GroundTile extends Obj {
     this.y = y;
     this.size = { x: 20, y: 20 };
     this.color = config.color || '#49c';
-    this.spritePath = config.spritePath || './assets/sprites/tiles/grass/grassMid.png';
+    this.spriteBank = {
+      default: ['./assets/sprites/tiles/grass/grassMid.png'],
+    };
   }
 
   get isGround() {

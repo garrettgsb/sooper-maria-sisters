@@ -11,9 +11,12 @@ class Mob extends Obj {
     this.frictionCoeff = 0.6;
     this.velocity = { x: 0, y: 0 };
     this.jumpLength = 1;
+    this.status.action = 'standing';
   }
 
   physics() {
+    //TODO: Find a better place to reset sprite to standing;
+    this.status.action = 'standing';
     this.brain.think();
     this.processCooldowns();
     this.friction();
@@ -47,33 +50,36 @@ class Mob extends Obj {
     } else if (action === 'right') {
       return this.moveRight();
     } else if (action === 'jump') {
-      this.jump();
+      return this.jump();
     } else if (action === 'run') {
-      this.run();
+      return this.run();
     }
   }
   
 // Movement methods
   moveLeft() {
-      this.velocity.x = accelTo(Math.abs(this.velocity.x), this.moveSpeed, this.accel) * -1;
+    this.status.action = 'running';
+    this.velocity.x = accelTo(Math.abs(this.velocity.x), this.moveSpeed, this.accel) * -1;
   }
 
   moveRight() {
     // TODO: Make sure you can move
+    this.status.action = 'running';
     this.velocity.x = accelTo(this.velocity.x, this.moveSpeed, this.accel);
   }
 
   moveUp(amount=this.moveSpeed) {
-      this.velocity.y -= amount;
+    this.velocity.y -= amount;
   }
-
+  
   moveDown(amount=this.fallSpeed) {
     if (this.velocity.y < this.moveSpeed) {
       this.velocity.y += this.accel;
     };
   }
-
+  
   jump() {
+    this.status.action = 'jumping';
     const canJump = (!!this.collisionRecord['bL'] || !!this.collisionRecord['bR']);
     if (this.cooldowns['jump']) {
       this.moveUp(this.jumpAccel);

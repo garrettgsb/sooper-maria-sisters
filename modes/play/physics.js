@@ -31,8 +31,6 @@ class PlayModePhysics {
     return true;
   };
 
-
-
 // Input Handlers
   pause(action) {
     if (action === 'pause') { this.mode.exit('pause'); }

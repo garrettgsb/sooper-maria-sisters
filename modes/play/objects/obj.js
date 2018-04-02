@@ -9,13 +9,18 @@ class Obj {
     this.mode = mode;
     this.collisionRecord = {};
     this.cooldowns = {};
+    this.status = {
+      action: 'default',
+      index: 0,
+    };
   }
 
   get sprite() {
-    if (!this.spritePath) { return null }
-    if (this.image) { return this.image }
-    this.image = new Image()
-    this.image.src = this.spritePath;
+    const currentSprite = this.spriteBank[this.status.action][this.status.index];
+    if (!currentSprite) { return null }
+    // if (this.image) { return this.image }
+    this.image = new Image();
+    this.image.src = currentSprite;
     return this.image;
   }
 
@@ -39,7 +44,6 @@ class Obj {
     });
 
     this.processCollisions(this.collisionRecord);
-
   }
 
   processCollisions(collisionRecord) {
