@@ -12,6 +12,7 @@ class Mob extends Obj {
     this.velocity = { x: 0, y: 0 };
     this.jumpLength = 1;
     this.status.action = 'standing';
+    this.status.direction = 'right';
   }
 
   physics() {
@@ -59,12 +60,14 @@ class Mob extends Obj {
 // Movement methods
   moveLeft() {
     this.status.action = 'running';
+    this.status.direction = 'left';
     this.velocity.x = accelTo(Math.abs(this.velocity.x), this.moveSpeed, this.accel) * -1;
   }
 
   moveRight() {
     // TODO: Make sure you can move
     this.status.action = 'running';
+    this.status.direction = 'right';
     this.velocity.x = accelTo(this.velocity.x, this.moveSpeed, this.accel);
   }
 
