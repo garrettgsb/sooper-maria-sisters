@@ -11,14 +11,14 @@ class Obj {
     this.cooldowns = {};
     this.status = {
       action: 'default',
-      index: 0,
+      animationFrame: 0,
     };
   }
 
   get sprite() {
-    const currentSprite = this.spriteBank[this.status.action][this.status.index];
+    // const currentSprite = this.spriteBank[this.status.action][(this.status.animationFrame % this.spriteBank[this.status.action].length)];
+    const currentSprite = this.spriteBank[this.status.action][this.status.animationFrame];
     if (!currentSprite) { return null }
-    // if (this.image) { return this.image }
     this.image = new Image();
     this.image.src = currentSprite;
     return this.image;

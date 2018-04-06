@@ -6,7 +6,7 @@ class BadGuy extends Mob {
     this.brain = new BadGuyBrain(this);
     this.spriteBank = {
       standing: ['assets/sprites/enemies/slimeBlock/slimeBlock.png'],
-      running: ['assets/sprites/enemies/slimeBlock/slimeBlock_move.png'],
+      running: ['assets/sprites/enemies/slimeBlock/slimeBlock_move.png', 'assets/sprites/enemies/slimeBlock/slimeBlock.png'],
       jumping: ['assets/sprites/enemies/slimeBlock/slimeBlock.png'],
     }
   }

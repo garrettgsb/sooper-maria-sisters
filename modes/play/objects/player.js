@@ -11,7 +11,7 @@ class Player extends Mob {
     this.frictionCoeff = 0.6;
     this.spriteBank = {
       standing: ['./assets/sprites/player/moira/bunny2_stand.png'],
-      running: ['./assets/sprites/player/moira/bunny2_walk1.png'],
+      running: ['./assets/sprites/player/moira/bunny2_walk1.png', './assets/sprites/player/moira/bunny2_walk2.png'],
       jumping: ['./assets/sprites/player/moira/bunny2_jump.png'],
     }
   }

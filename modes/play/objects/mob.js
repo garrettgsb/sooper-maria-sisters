@@ -12,17 +12,21 @@ class Mob extends Obj {
     this.velocity = { x: 0, y: 0 };
     this.jumpLength = 1;
     this.status.action = 'standing';
-    this.status.direction = 'right';
+    this.status.direction;
   }
 
   physics() {
     //TODO: Find a better place to reset sprite to standing;
-    this.status.action = 'standing';
     this.brain.think();
     this.processCooldowns();
     this.friction();
     this.gravity();
-    this.processActions();
+    if (this.brain.actions.length > 0) {
+      this.processActions();
+    } else {
+      this.status.action = 'standing';
+      this.status.animationFrame = 0;
+    }
     this.collisions([...this.mode.level.ground, ...this.mode.state.mobs]);
     this.x += this.velocity.x;
     this.y += this.velocity.y;
@@ -30,7 +34,7 @@ class Mob extends Obj {
       this.die();
     }
   }
-
+  
   gravity() {
     if (this.velocity.y < this.fallSpeed) {
       this.velocity.y = accelTo(this.velocity.y, this.fallSpeed, 2);
@@ -57,8 +61,17 @@ class Mob extends Obj {
     }
   }
   
+  selectNextFrame() {
+    if (this.status.animationFrame === this.spriteBank[this.status.action].length - 1) {
+      this.status.animationFrame = 0;
+    } else {
+      this.status.animationFrame++;
+    }
+  }
+
 // Movement methods
   moveLeft() {
+    this.selectNextFrame();
     this.status.action = 'running';
     this.status.direction = 'left';
     this.velocity.x = accelTo(Math.abs(this.velocity.x), this.moveSpeed, this.accel) * -1;
@@ -66,6 +79,7 @@ class Mob extends Obj {
 
   moveRight() {
     // TODO: Make sure you can move
+    this.selectNextFrame();
     this.status.action = 'running';
     this.status.direction = 'right';
     this.velocity.x = accelTo(this.velocity.x, this.moveSpeed, this.accel);
@@ -82,6 +96,7 @@ class Mob extends Obj {
   }
   
   jump() {
+    this.status.animationFrame = 0;
     this.status.action = 'jumping';
     const canJump = (!!this.collisionRecord['bL'] || !!this.collisionRecord['bR']);
     if (this.cooldowns['jump']) {
