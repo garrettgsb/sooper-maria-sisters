@@ -5,7 +5,9 @@ class Trampoline extends Obj {
     this.y = y;
     this.size = { x: 20, y: 20 };
     this.color = '#94c';
-    this.spritePath = './assets/sprites/tiles/spring/spring.png';
+    this.spriteBank = {
+      default: ['./assets/sprites/tiles/spring/spring.png'],
+    };
   }
 
   get isGround() {

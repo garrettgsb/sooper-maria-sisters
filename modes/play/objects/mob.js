@@ -11,6 +11,10 @@ class Mob extends Obj {
     this.frictionCoeff = 0.6;
     this.velocity = { x: 0, y: 0 };
     this.jumpLength = 1;
+    this.status.action = 'standing';
+    this.status.direction;
+    this.status.lastAnimationTimestamp = 0;
+    this.animationRate = 150;
   }
 
   physics() {
@@ -18,7 +22,13 @@ class Mob extends Obj {
     this.processCooldowns();
     this.friction();
     this.gravity();
-    this.processActions();
+    if (this.brain.actions.length > 0) {
+      this.selectNextFrame();
+      this.processActions();
+    } else {
+      this.status.action = 'standing';
+      this.status.animationFrame = 0;
+    }
     this.collisions([...this.mode.level.ground, ...this.mode.state.mobs]);
     this.x += this.velocity.x;
     this.y += this.velocity.y;
@@ -26,7 +36,7 @@ class Mob extends Obj {
       this.die();
     }
   }
-
+  
   gravity() {
     if (this.velocity.y < this.fallSpeed) {
       this.velocity.y = accelTo(this.velocity.y, this.fallSpeed, 2);
@@ -47,33 +57,45 @@ class Mob extends Obj {
     } else if (action === 'right') {
       return this.moveRight();
     } else if (action === 'jump') {
-      this.jump();
+      return this.jump();
     } else if (action === 'run') {
-      this.run();
+      return this.run();
     }
   }
   
+  selectNextFrame() {
+    if (this.game.now > this.status.lastAnimationTimestamp + this.animationRate) {
+      this.status.lastAnimationTimestamp = this.game.now;
+      this.status.animationFrame = this.status.animationFrame === this.spriteBank[this.status.action].length - 1 ? 0 : this.status.animationFrame + 1;
+    }
+  }
+
 // Movement methods
   moveLeft() {
-      this.velocity.x = accelTo(Math.abs(this.velocity.x), this.moveSpeed, this.accel) * -1;
+    this.status.action = 'running';
+    this.status.direction = 'left';
+    this.velocity.x = accelTo(Math.abs(this.velocity.x), this.moveSpeed, this.accel) * -1;
   }
 
   moveRight() {
     // TODO: Make sure you can move
+    this.status.action = 'running';
+    this.status.direction = 'right';
     this.velocity.x = accelTo(this.velocity.x, this.moveSpeed, this.accel);
   }
 
   moveUp(amount=this.moveSpeed) {
-      this.velocity.y -= amount;
+    this.velocity.y -= amount;
   }
-
+  
   moveDown(amount=this.fallSpeed) {
     if (this.velocity.y < this.moveSpeed) {
       this.velocity.y += this.accel;
     };
   }
-
+  
   jump() {
+    this.status.action = 'jumping';
     const canJump = (!!this.collisionRecord['bL'] || !!this.collisionRecord['bR']);
     if (this.cooldowns['jump']) {
       this.moveUp(this.jumpAccel);

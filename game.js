@@ -8,6 +8,7 @@ class Game {
     }
     this.cellSize = config.cellSize;
     this.lastTick = window.performance.now();
+    this.now = window.performance.now();
     this.input = new Input(this);
     this.board = new Board(this.canvas, this.cellSize);
     this.modes = {
@@ -31,6 +32,7 @@ class Game {
 
   run() {
     const Run = this.run.bind(this);
+    this.now = window.performance.now();
     requestAnimationFrame(Run);
     if (this.lastTick + this.state.renderTick < window.performance.now()) {
       this.lastTick = window.performance.now();

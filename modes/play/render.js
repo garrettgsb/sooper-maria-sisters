@@ -51,7 +51,11 @@ class PlayModeRender {
   drawMobs() {
     this.mode.state.mobs.forEach(mob => {
       if (mob.sprite) {
-        this.drawImage(mob.sprite, mob.x, mob.y, mob.size.x, mob.size.y);
+        if (mob.status.direction === 'right') {
+          this.drawImage(mob.sprite, mob.x, mob.y, mob.size.x, mob.size.y);
+        } else {
+          this.drawImageReversed(mob.sprite, mob.x, mob.y, mob.size.x, mob.size.y);
+        }
       } else {
         this.drawRect(mob.x, mob.y, mob.color, mob.size.x, mob.size.y);
       }
@@ -118,6 +122,14 @@ class PlayModeRender {
     const {x: screenX, y: screenY} = this.screenCoords({ x, y }, parallax);
     const ctx = this.game.ctx;
     ctx.drawImage(image, screenX, screenY, width, height);
+  }
+
+  drawImageReversed(image, x, y, width, height) {
+    const {x: screenX, y: screenY} = this.screenCoords({ x, y });
+    const ctx = this.game.ctx;
+    ctx.scale(-1, 1);
+    ctx.drawImage(image, -screenX, screenY, -width, height);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 
   screenCoords(worldCoords, parallax = 1) {
