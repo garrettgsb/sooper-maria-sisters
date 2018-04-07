@@ -17,7 +17,10 @@ class Obj {
 
   get sprite() {
     const currentSprite = this.spriteBank[this.status.action][this.status.animationFrame];
-    if (!currentSprite) { return null }
+    if (!currentSprite) {
+      this.status.animationFrame = 0;
+      return new Image(this.spriteBank[this.status.action][this.status.animationFrame]);
+    }
     this.image = new Image();
     this.image.src = currentSprite;
     return this.image;

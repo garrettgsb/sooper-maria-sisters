@@ -23,6 +23,7 @@ class Mob extends Obj {
     this.friction();
     this.gravity();
     if (this.brain.actions.length > 0) {
+      this.selectNextFrame();
       this.processActions();
     } else {
       this.status.action = 'standing';
@@ -64,19 +65,13 @@ class Mob extends Obj {
   
   selectNextFrame() {
     if (this.game.now > this.status.lastAnimationTimestamp + this.animationRate) {
-      if (this.status.animationFrame === this.spriteBank[this.status.action].length - 1) {
-        this.status.animationFrame = 0;
-        this.status.lastAnimationTimestamp = this.game.now;
-      } else {
-        this.status.lastAnimationTimestamp = this.game.now;
-        this.status.animationFrame++;
-      }
+      this.status.lastAnimationTimestamp = this.game.now;
+      this.status.animationFrame = this.status.animationFrame === this.spriteBank[this.status.action].length - 1 ? 0 : this.status.animationFrame + 1;
     }
   }
 
 // Movement methods
   moveLeft() {
-    this.selectNextFrame();
     this.status.action = 'running';
     this.status.direction = 'left';
     this.velocity.x = accelTo(Math.abs(this.velocity.x), this.moveSpeed, this.accel) * -1;
@@ -84,7 +79,6 @@ class Mob extends Obj {
 
   moveRight() {
     // TODO: Make sure you can move
-    this.selectNextFrame();
     this.status.action = 'running';
     this.status.direction = 'right';
     this.velocity.x = accelTo(this.velocity.x, this.moveSpeed, this.accel);
@@ -101,8 +95,6 @@ class Mob extends Obj {
   }
   
   jump() {
-    //Jump is a single frame and breaks if index is large than one
-    this.status.animationFrame = 0;
     this.status.action = 'jumping';
     const canJump = (!!this.collisionRecord['bL'] || !!this.collisionRecord['bR']);
     if (this.cooldowns['jump']) {
