@@ -104,7 +104,6 @@ class PlayModeRender {
       .map(pt => [pt.x, pt.y]);
     if (points.length < 3) return;
     const ctx = this.game.ctx;
-    console.log("gonna drawPath:", points);
     ctx.beginPath();
     ctx.moveTo(...points[0]);
     for (var point of points.slice(1)) {
