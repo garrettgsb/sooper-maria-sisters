@@ -9,6 +9,7 @@ class BadGuy extends Mob {
       running: ['assets/sprites/enemies/slimeBlock/slimeBlock_move.png', 'assets/sprites/enemies/slimeBlock/slimeBlock.png'],
       jumping: ['assets/sprites/enemies/slimeBlock/slimeBlock.png'],
     }
+    this.animationRate = 500;
   }
 
   collisionCallback(obj) {

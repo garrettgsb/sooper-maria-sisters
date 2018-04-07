@@ -13,10 +13,11 @@ class Mob extends Obj {
     this.jumpLength = 1;
     this.status.action = 'standing';
     this.status.direction;
+    this.status.lastAnimationTimestamp = 0;
+    this.animationRate = 150;
   }
 
   physics() {
-    //TODO: Find a better place to reset sprite to standing;
     this.brain.think();
     this.processCooldowns();
     this.friction();
@@ -62,10 +63,14 @@ class Mob extends Obj {
   }
   
   selectNextFrame() {
-    if (this.status.animationFrame === this.spriteBank[this.status.action].length - 1) {
-      this.status.animationFrame = 0;
-    } else {
-      this.status.animationFrame++;
+    if (this.game.now > this.status.lastAnimationTimestamp + this.animationRate) {
+      if (this.status.animationFrame === this.spriteBank[this.status.action].length - 1) {
+        this.status.animationFrame = 0;
+        this.status.lastAnimationTimestamp = this.game.now;
+      } else {
+        this.status.lastAnimationTimestamp = this.game.now;
+        this.status.animationFrame++;
+      }
     }
   }
 
@@ -96,6 +101,7 @@ class Mob extends Obj {
   }
   
   jump() {
+    //Jump is a single frame and breaks if index is large than one
     this.status.animationFrame = 0;
     this.status.action = 'jumping';
     const canJump = (!!this.collisionRecord['bL'] || !!this.collisionRecord['bR']);
