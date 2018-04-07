@@ -24,7 +24,6 @@ class SolidBackground extends Background {
 
 class VectorPyramidBackground extends Background {
   constructor(game, mode, config) {
-    console.log(JSON.stringify(config));
     super(game, mode, config, {
       x: 0,
       y: 0,
@@ -32,7 +31,6 @@ class VectorPyramidBackground extends Background {
       height: 10,
       parallax: 0.8,
     });
-    console.log(this.config);
   }
 
   render(renderer) {
