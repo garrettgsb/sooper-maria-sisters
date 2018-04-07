@@ -5,6 +5,7 @@ class Level {
     this.mode = mode;
     [this.ground, this.playerSpawn, this.mobs] = this.processGrid(config);
     this.deathAltitude = misc_config.deathAltitude || this.size.y * 2.0;
+    this.backgrounds = (config.backgrounds || []).map(bg => bg(game, mode, config.scale));
   }
 
   get size() {
