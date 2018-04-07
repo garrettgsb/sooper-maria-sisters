@@ -13,6 +13,7 @@ class PlayModeRender {
     this.updateCamera();
     this.clearCanvas();
     // this.drawText('soupmar', 100+(Math.random()*5), 100+(Math.random()*5), '#bbb', 52+(Math.floor(Math.random() * 4)));
+    this.drawBackground();
     this.drawMobs();
     this.drawGround();
   }
@@ -61,6 +62,15 @@ class PlayModeRender {
     });
   }
 
+  drawBackground() {
+    const currentLevel = this.mode.state.levels[this.mode.currentLevel];
+    if (!currentLevel.backgrounds) return;
+    const backgrounds = currentLevel.backgrounds;
+    for (let background of backgrounds) {
+      background.render(this);
+    }
+  }
+
   drawGround() {
     const currentLevel = this.mode.state.levels[this.mode.currentLevel];
     currentLevel.ground.forEach(tile => {
@@ -72,8 +82,8 @@ class PlayModeRender {
     });
   }
 
-  clearCanvas() {
-    this.game.ctx.fillStyle = this.backgroundColor;
+  clearCanvas(fillStyle) {
+    this.game.ctx.fillStyle = fillStyle || this.backgroundColor;
     this.game.ctx.fillRect(0, 0, this.game.viewport.x, this.game.viewport.y);
   }
 
@@ -85,15 +95,31 @@ class PlayModeRender {
     ctx.fillText(text, x-this.camera.x, y-this.camera.y);
   }
 
-  drawRect(x, y, color, width, height) {
-    const {x: screenX, y: screenY} = this.screenCoords({ x, y });
+  drawRect(x, y, color, width, height, parallax = 1) {
+    const {x: screenX, y: screenY} = this.screenCoords({ x, y }, parallax);
     const ctx = this.game.ctx;
     ctx.fillStyle = color;
     ctx.fillRect(screenX, screenY, width, height);
   }
 
-  drawImage(image, x, y, width, height) {
-    const {x: screenX, y: screenY} = this.screenCoords({ x, y });
+  drawPath(points, fillStyle, parallax = 1) {
+    points = points
+      .map(pt => this.screenCoords({x: pt[0], y: pt[1]}, parallax))
+      .map(pt => [pt.x, pt.y]);
+    if (points.length < 3) return;
+    const ctx = this.game.ctx;
+    ctx.beginPath();
+    ctx.moveTo(...points[0]);
+    for (var point of points.slice(1)) {
+      ctx.lineTo(...point);
+    }
+    ctx.closePath();
+    ctx.fillStyle = fillStyle;
+    ctx.fill();
+  }
+
+  drawImage(image, x, y, width, height, parallax = 1) {
+    const {x: screenX, y: screenY} = this.screenCoords({ x, y }, parallax);
     const ctx = this.game.ctx;
     ctx.drawImage(image, screenX, screenY, width, height);
   }
@@ -105,12 +131,12 @@ class PlayModeRender {
     ctx.drawImage(image, -screenX, screenY, -width, height);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
-
-  screenCoords(worldCoords) {
+  
+  screenCoords(worldCoords, parallax = 1) {
     // worldCoords -> { x, y }
     return {
-      x: Math.floor(worldCoords.x - this.camera.x),
-      y: Math.floor(worldCoords.y - this.camera.y)
+      x: Math.floor(worldCoords.x - parallax * this.camera.x),
+      y: Math.floor(worldCoords.y - parallax * this.camera.y)
     }
   }
 
