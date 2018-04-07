@@ -13,17 +13,14 @@ class Obj {
       action: 'default',
       animationFrame: 0,
     };
+    this.spriteBank = {default: []}
+    this.imageBank = undefined;
   }
 
   get sprite() {
-    const currentSprite = this.spriteBank[this.status.action][this.status.animationFrame];
-    if (!currentSprite) {
-      this.status.animationFrame = 0;
-      return new Image(this.spriteBank[this.status.action][this.status.animationFrame]);
-    }
-    this.image = new Image();
-    this.image.src = currentSprite;
-    return this.image;
+    if (!this.imageBank) { this._configImageBank(); }   // TODO: how do we detect if this cache is stale?
+    this.status.animationFrame %= this.imageBank[this.status.action].length;
+    return this.imageBank[this.status.action][this.status.animationFrame];
   }
 
   get hitBox() {
@@ -32,6 +29,18 @@ class Obj {
       tR: { x: this.x + this.size.x, y: this.y }, // Top right corner
       bL: { x: this.x, y: this.y + this.size.y }, // Bottom left corner
       bR: { x: this.x + this.size.x, y: this.y + this.size.y } // Bottom right corner
+    }
+  }
+
+  _configImageBank() {
+    this.imageBank = {};
+    for (let action in this.spriteBank) {
+      let actionArray = this.spriteBank[action];
+      this.imageBank[action] = [];
+      for (let index in actionArray) {
+        this.imageBank[action][index] = new Image();
+        this.imageBank[action][index].src = actionArray[index];
+      }
     }
   }
 
