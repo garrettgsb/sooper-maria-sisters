@@ -3,6 +3,7 @@ class PlayModeRender {
     this.game = game;
     this.mode = mode;
     this.backgroundColor = '#222';
+    this.imageBank = new ImageBank();
     this.camera = {
       x: 100,
       y: 0
@@ -52,9 +53,9 @@ class PlayModeRender {
     this.mode.state.mobs.forEach(mob => {
       if (mob.sprite) {
         if (mob.status.direction === 'right') {
-          this.drawImage(mob.sprite, mob.x, mob.y, mob.size.x, mob.size.y);
+          this.drawImage(this.imageBank.get(mob.sprite), mob.x, mob.y, mob.size.x, mob.size.y);
         } else {
-          this.drawImageReversed(mob.sprite, mob.x, mob.y, mob.size.x, mob.size.y);
+          this.drawImageReversed(this.imageBank.get(mob.sprite), mob.x, mob.y, mob.size.x, mob.size.y);
         }
       } else {
         this.drawRect(mob.x, mob.y, mob.color, mob.size.x, mob.size.y);
@@ -75,7 +76,7 @@ class PlayModeRender {
     const currentLevel = this.mode.state.levels[this.mode.currentLevel];
     currentLevel.ground.forEach(tile => {
       if (tile.sprite) {
-        this.drawImage(tile.sprite, tile.x, tile.y, tile.size.x, tile.size.y);
+        this.drawImage(this.imageBank.get(tile.sprite), tile.x, tile.y, tile.size.x, tile.size.y);
       } else {
         this.drawRect(tile.x, tile.y, tile.color, tile.size.x, tile.size.y);
       }

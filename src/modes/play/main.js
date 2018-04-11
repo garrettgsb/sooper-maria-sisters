@@ -24,8 +24,9 @@ class PlayMode {
     const state = {
       levels: [
         new Level(this.game, this, level1config),
-        //new Level(this.game, this, level2config),
+        new Level(this.game, this, level2config),
         new Level(this.game, this, level3config),
+        new Level(this.game, this, level4config),
       ]
     };
     state.player = new Player(this.game, this, ...(state.levels[this.currentLevel].playerSpawn || [50, 50]));
@@ -61,9 +62,9 @@ class PlayMode {
 
   cycleLevel() {
     const oldLevel = this.currentLevel;
+    this.currentLevel = (oldLevel + 1) % this.state.levels.length;
     this.state = this.initialState;
     this.exit('start');
-    this.currentLevel = (oldLevel + 1) % this.state.levels.length;
   }
 
   playerNewLife() {
