@@ -1,6 +1,7 @@
+import GroundTile from '../objects/groundTile';
+import Trampoline from '../objects/trampoline';
 
-
-level5config = {
+export default {
   scale: [20, 20],
   grid: `
 ........................................................................................................................

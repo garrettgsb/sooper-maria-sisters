@@ -1,4 +1,4 @@
-class ImageBank {
+export default class ImageBank {
   constructor() {
     this.cache = {};
   }

@@ -1,3 +1,6 @@
+import ImageBank from './imageBank';
+
+
 class PlayModeRender {
   constructor(game, mode) {
     this.game = game;

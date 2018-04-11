@@ -1,6 +1,9 @@
+import GroundTile from '../objects/groundTile';
+import Trampoline from '../objects/trampoline';
+import BadGuy from '../objects/badGuy';
+import {SolidBackground, VectorPyramidBackground}  from './backgrounds';
 
-
-level4config = {
+export default {
   scale: [20, 20],
   grid: `
 ........................................................................................................................
