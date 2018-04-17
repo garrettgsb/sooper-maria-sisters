@@ -8,6 +8,7 @@ import level2config from './levels/2';
 import level3config from './levels/3';
 import level4config from './levels/4';
 import level5config from './levels/5';
+import level6config from './levels/6';
 
 import Player from './objects/player';
 
@@ -18,7 +19,7 @@ class PlayMode {
     this.input = new PlayModeInput(game, this);
     this.physics = new PlayModePhysics(game, this);
     this.render = new PlayModeRender(game, this);
-    this.currentLevel = 0;
+    this.currentLevel = 3;
     this.state = this.initialState;
   }
 
