@@ -32,7 +32,6 @@ class Mob extends Obj {
       this.status.action = 'standing';
       this.status.animationFrame = 0;
     }
-    window.garbage.alpha = (window.garbage.alpha||0) + 1;
     this.collisions([...this.mode.level.ground, ...this.mode.state.mobs]);
     this.x += this.velocity.x;
     this.y += this.velocity.y;

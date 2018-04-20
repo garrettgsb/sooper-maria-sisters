@@ -19,7 +19,7 @@ class PlayMode {
     this.input = new PlayModeInput(game, this);
     this.physics = new PlayModePhysics(game, this);
     this.render = new PlayModeRender(game, this);
-    this.currentLevel = 1;
+    this.currentLevel = 0;
     this.state = this.initialState;
   }
 
@@ -57,16 +57,10 @@ class PlayMode {
 
   run() {
     if (!this.running) { this.init() };
-    window.garbage = {};
     this.input.do();
     this.physics.do();
     this.render.do();
     this.input.clear();
-    this.diagnose();
-  }
-
-  diagnose() {
-    // console.log(JSON.stringify(window.garbage));
   }
 
   cycleLevel() {
