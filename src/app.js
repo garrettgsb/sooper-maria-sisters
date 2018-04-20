@@ -12,3 +12,5 @@ const elements = {
 
 const game = new Game(config, elements);
 game.init();
+
+window.game = game; // runtime hackery

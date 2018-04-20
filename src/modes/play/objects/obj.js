@@ -1,5 +1,29 @@
 import {getRanges, inRange, accelTo, decelTo, } from '../../../helpers';
 
+function earlyCutout(theyHit, meHit, meVel) {
+  function sq(x) { return x**2; }
+  var rangeSquared = meVel.x ** 2 + meVel.y ** 2 + 100;
+  var theyX = [theyHit.tR.x, theyHit.tL.x];
+  var meX = [meHit.tR.x, meHit.tL.x];
+  var diffXSquared = [
+    theyX[0] - meX[0],
+    theyX[0] - meX[1],
+    theyX[1] - meX[0],
+    theyX[1] - meX[1],
+  ].map(sq);
+  var theyY = [theyHit.tR.y, theyHit.bR.y];
+  var meY = [meHit.tR.y, meHit.bR.y];
+  var diffYSquared = [
+    theyY[0] - meY[0],
+    theyY[0] - meY[1],
+    theyY[1] - meY[0],
+    theyY[1] - meY[1],
+  ].map(sq);
+  return (Math.min(...diffXSquared) > rangeSquared ||
+    Math.min(...diffYSquared) > rangeSquared);
+}
+
+
 class Obj {
   constructor(game, mode, x, y) {
     this.name = "Undifferentiated Obj";
@@ -33,6 +57,8 @@ class Obj {
   }
 
   collisions(collection) {
+    window.garbage.beta = (window.garbage.beta||0) + 1;
+
     this.collisionRecord = {};
     let x, y;
     collection.forEach(obj => {
@@ -58,6 +84,7 @@ class Obj {
   collision(obj) {
     // const lastX = this.x
     // const lastY = this.y
+    if (earlyCutout(obj.hitBox, this.hitBox, this.velocity)) return [this.velocity.x, this.velocity.y];
     let [xRange, yRange] = getRanges(obj);
     const xVects = [];
     const yVects = [];
