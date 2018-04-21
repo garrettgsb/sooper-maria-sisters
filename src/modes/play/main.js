@@ -19,7 +19,7 @@ class PlayMode {
     this.input = new PlayModeInput(game, this);
     this.physics = new PlayModePhysics(game, this);
     this.render = new PlayModeRender(game, this);
-    this.currentLevel = 3;
+    this.currentLevel = 0;
     this.state = this.initialState;
   }
 

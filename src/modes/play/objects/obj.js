@@ -1,4 +1,4 @@
-import {getRanges, inRange, accelTo, decelTo, } from '../../../helpers';
+import {getRanges, inRange, accelTo, decelTo, wontCollide, } from '../../../helpers';
 
 class Obj {
   constructor(game, mode, x, y) {
@@ -58,6 +58,7 @@ class Obj {
   collision(obj) {
     // const lastX = this.x
     // const lastY = this.y
+    if (wontCollide(obj.hitBox, this.hitBox, this.velocity)) return [this.velocity.x, this.velocity.y];
     let [xRange, yRange] = getRanges(obj);
     const xVects = [];
     const yVects = [];

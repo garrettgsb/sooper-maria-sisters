@@ -39,7 +39,7 @@ class Mob extends Obj {
       this.die();
     }
   }
-  
+
   gravity() {
     if (this.velocity.y < this.fallSpeed) {
       this.velocity.y = accelTo(this.velocity.y, this.fallSpeed, 2);
@@ -65,7 +65,7 @@ class Mob extends Obj {
       return this.run();
     }
   }
-  
+
   selectNextFrame() {
     if (this.game.now > this.status.lastAnimationTimestamp + this.animationRate) {
       this.status.lastAnimationTimestamp = this.game.now;
@@ -90,13 +90,13 @@ class Mob extends Obj {
   moveUp(amount=this.moveSpeed) {
     this.velocity.y -= amount;
   }
-  
+
   moveDown(amount=this.fallSpeed) {
     if (this.velocity.y < this.moveSpeed) {
       this.velocity.y += this.accel;
     };
   }
-  
+
   jump() {
     this.status.action = 'jumping';
     const canJump = (!!this.collisionRecord['bL'] || !!this.collisionRecord['bR']);
