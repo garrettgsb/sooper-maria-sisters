@@ -7,9 +7,9 @@ class BadGuy extends Mob {
     this.color = "#ee5";
     this.brain = new BadGuyBrain(this);
     this.spriteBank = {
-      standing: ['assets/sprites/enemies/slimeBlock/slimeBlock.png'],
-      running: ['assets/sprites/enemies/slimeBlock/slimeBlock_move.png', 'assets/sprites/enemies/slimeBlock/slimeBlock.png'],
-      jumping: ['assets/sprites/enemies/slimeBlock/slimeBlock.png'],
+      standing: ['assets/sprites/mobs/slimeBlock/slimeBlock.png'],
+      running: ['assets/sprites/mobs/slimeBlock/slimeBlock_move.png', 'assets/sprites/mobs/slimeBlock/slimeBlock.png'],
+      jumping: ['assets/sprites/mobs/slimeBlock/slimeBlock.png'],
     }
     this.animationRate = 500;
   }

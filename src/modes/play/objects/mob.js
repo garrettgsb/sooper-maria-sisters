@@ -115,7 +115,10 @@ class Mob extends Obj {
   }
 
   die() {
-    // TODO: non-player mobs are currently immortal
+    if (!this.died) {
+      this.died = true;
+      return this.mode.killMob(this);
+    }
   }
 }
 

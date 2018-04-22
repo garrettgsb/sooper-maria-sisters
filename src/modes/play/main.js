@@ -56,7 +56,7 @@ class PlayMode {
   }
 
   run() {
-    if (!this.running) { this.init() };    
+    if (!this.running) { this.init() };
     this.input.do();
     this.physics.do();
     this.render.do();
@@ -72,6 +72,10 @@ class PlayMode {
 
   playerNewLife() {
     this.cycleLevel();
+  }
+
+  killMob(mob) {
+    this.state.mobs.splice(this.state.mobs.indexOf(mob), 1);
   }
 }
 

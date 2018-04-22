@@ -94,7 +94,7 @@ class Obj {
       };
       if (badNews) {
         timeout = 100;
-        console.log('Attempting to avert crisis');
+        // console.log('Attempting to avert crisis');
         let invX = this.velocity.x * -1;
         let invY = this.velocity.y * -1;
         x = point.x + invX;
