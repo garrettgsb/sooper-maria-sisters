@@ -56,7 +56,7 @@ class PlayMode {
   }
 
   run() {
-    if (!this.running) { this.init() };
+    if (!this.running) { this.init() };    
     this.input.do();
     this.physics.do();
     this.render.do();

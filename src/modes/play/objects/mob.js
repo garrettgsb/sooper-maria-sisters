@@ -25,12 +25,11 @@ class Mob extends Obj {
     this.processCooldowns();
     this.friction();
     this.gravity();
+    this.selectNextFrame();
     if (this.brain.actions.length > 0) {
-      this.selectNextFrame();
       this.processActions();
     } else {
       this.status.action = 'standing';
-      this.status.animationFrame = 0;
     }
     this.collisions([...this.mode.level.ground, ...this.mode.state.mobs]);
     this.x += this.velocity.x;

@@ -61,7 +61,6 @@ class Area {
 
   absCoords(x, y) {
     // Used for rendering
-    // console.log(this.x, this.y);
     return [this.x + x, this.y + y];
   }
 
