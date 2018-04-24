@@ -13,6 +13,7 @@ class Obj {
     this.cooldowns = {};
     this.status = {
       action: 'default',
+      direction: null,
       animationFrame: 0,
     };
     this.spriteBank = {default: []}
@@ -67,9 +68,9 @@ class Obj {
     Object.entries(this.hitBox).forEach(pt => {
       names.push(pt[0])
       const point = pt[1];
-      let timeout = 1000;
-      let yTimeout = 100;
-      let xTimeout = 100;
+      let timeout = 100;
+      let yTimeout = 50;
+      let xTimeout = 50;
       let [vectX, vectY] = [this.velocity.x, this.velocity.y];
       let x = point.x + vectX;
       let y = point.y + vectY;
@@ -93,7 +94,7 @@ class Obj {
       };
       if (badNews) {
         timeout = 100;
-        console.log('Attempting to avert crisis');
+        // console.log('Attempting to avert crisis');
         let invX = this.velocity.x * -1;
         let invY = this.velocity.y * -1;
         x = point.x + invX;

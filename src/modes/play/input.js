@@ -18,6 +18,7 @@ class PlayModeInput {
       'KeyW': 'up',
       'KeyX': 'run',
       'KeyZ': 'jump',
+      'KeyG':  'fungus',
       'Period': 'run',
       'default': 'default',
     }
