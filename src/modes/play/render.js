@@ -56,11 +56,7 @@ class PlayModeRender {
     this.mode.state.mobs.forEach(mob => {
       const [x, y, sizeX, sizeY] = [mob.x, mob.y, mob.size.x, mob.size.y].map(val => Math.floor(val));
       if (mob.sprite) {
-        if (mob.status.direction === 'right') {
-          this.drawImage(this.imageBank.get(mob.sprite), x, y, sizeX, sizeY);
-        } else {
-          this.drawImageReversed(this.imageBank.get(mob.sprite), x, y, sizeX, sizeY);
-        }
+        this.drawImage(this.imageBank.get(mob.sprite), mob.x, mob.y, mob.size.x, mob.size.y, {reversed: mob.status.direction === 'left'});
       } else {
         this.drawRect(x, y, sizeX, sizeY);
       }
@@ -123,18 +119,21 @@ class PlayModeRender {
     ctx.fill();
   }
 
-  drawImage(image, x, y, width, height, parallax = 1) {
+
+  drawImage(image, x, y, width, height, options = {}) {
+    const parallax = options.parallax || 1;
+    const reversed = options.reversed || false;
     const {x: screenX, y: screenY} = this.screenCoords({ x, y }, parallax);
     const ctx = this.game.ctx;
-    ctx.drawImage(image, screenX, screenY, width, height);
-  }
-
-  drawImageReversed(image, x, y, width, height) {
-    const {x: screenX, y: screenY} = this.screenCoords({ x, y });
-    const ctx = this.game.ctx;
-    ctx.scale(-1, 1);
-    ctx.drawImage(image, -screenX, screenY, -width, height);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    if (screenX + width < 0 || screenX > ctx.canvas.width) return;
+    if (screenY + height < 0 || screenY > ctx.canvas.height) return;
+    if (reversed) {
+      ctx.scale(-1, 1);
+      ctx.drawImage(image, -screenX, screenY, -width, height);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+    } else {
+      ctx.drawImage(image, screenX, screenY, width, height);
+    }
   }
 
   screenCoords(worldCoords, parallax = 1) {
