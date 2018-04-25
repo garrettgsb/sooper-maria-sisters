@@ -1,5 +1,6 @@
-import Input from './input.js';
+import Audio from './audio.js';
 import Board from './board.js';
+import Input from './input.js';
 import StartMode from './modes/start/main.js';
 import PauseMode from './modes/pause/main.js';
 import PlayMode from './modes/play/main.js';
@@ -10,6 +11,7 @@ class Game {
   constructor(config, elements) {
     this.canvas = elements.canvas;
     this.ctx = elements.canvas.getContext('2d');
+    this.audio = new Audio();
     this.viewport = {
       x: this.canvas.width,
       y: this.canvas.height
@@ -32,8 +34,6 @@ class Game {
   }
 
   init() {
-    // TODO: this.input.setupEventListeners();
-    // Or maybe I don't need an init method here at all.
     this.input.init();
     this.run();
   }

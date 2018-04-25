@@ -73,6 +73,10 @@ class PlayMode {
   playerNewLife() {
     this.cycleLevel();
   }
+
+  killMob(mob) {
+    this.state.mobs.splice(this.state.mobs.indexOf(mob), 1);
+  }
 }
 
 export default PlayMode;

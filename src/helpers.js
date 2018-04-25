@@ -50,7 +50,6 @@ function wontCollide(theyHit, meHit, meVel) {
     Math.min(...diffYSquared) > rangeSquared);
 }
 
-
 export {
   getRanges,
   inRange,

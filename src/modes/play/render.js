@@ -54,10 +54,11 @@ class PlayModeRender {
 
   drawMobs() {
     this.mode.state.mobs.forEach(mob => {
+      const [x, y, sizeX, sizeY] = [mob.x, mob.y, mob.size.x, mob.size.y].map(val => Math.floor(val));
       if (mob.sprite) {
         this.drawImage(this.imageBank.get(mob.sprite), mob.x, mob.y, mob.size.x, mob.size.y, {reversed: mob.status.direction === 'left'});
       } else {
-        this.drawRect(mob.x, mob.y, mob.color, mob.size.x, mob.size.y);
+        this.drawRect(x, y, sizeX, sizeY);
       }
     });
   }
