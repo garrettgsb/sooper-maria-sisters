@@ -21,6 +21,9 @@ class PlayMode {
     this.render = new PlayModeRender(game, this);
     this.currentLevel = 0;
     this.state = this.initialState;
+
+    this.profiling_log = [];
+    this.should_profile = true;
   }
 
   get initialState() {
@@ -56,11 +59,30 @@ class PlayMode {
   }
 
   run() {
+    var start_ts = window.performance.now()
+
     if (!this.running) { this.init() };
     this.input.do();
     this.physics.do();
     this.render.do();
     this.input.clear();
+
+    if (this.should_profile) {
+      const PROFILING_MEMORY_LENGTH = 20;
+      var delta_t = window.performance.now() - start_ts;
+      this.profiling_log.push(delta_t);
+      if (this.profiling_log.length >= PROFILING_MEMORY_LENGTH) {
+        var mean_time = this.profiling_log.reduce((a, b) => a + b, 0) / PROFILING_MEMORY_LENGTH;
+        this.profiling_log.sort((a, b) => (a - b))[0];
+        var some_times = [0, 1, 2, 3, 4].map(tile => this.profiling_log[Math.floor((tile/4.0)*(this.profiling_log.length-1))]);
+        some_times.push(mean_time);
+        console.log(
+          "0/4  1/4  2/4  3/4  4/4  mean    ",
+          some_times.map(time => time.toFixed(2).toString().padStart(7)).join("    ")
+        );
+        this.profiling_log = [];
+      }
+    }
   }
 
   cycleLevel() {
